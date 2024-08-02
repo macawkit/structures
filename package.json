@@ -1,0 +1,43 @@
+{
+  "name": "@macawkit/structures",
+  "version": "0.1.0",
+  "description": "Simple structures for MacawKit projects",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "browser": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean && tsc",
+    "build": "node build.mjs",
+    "build:tests": "npm run build test",
+    "build:release": "npm run build release",
+    "pretest": "npm run --silent build:tests",
+    "test": "node --test --test-reporter=spec",
+    "test:coverage": "node --test --experimental-test-coverage",
+    "lint": "eslint .",
+    "prepack": "npm run build:release"
+  },
+  "author": {
+    "name": "Yury Gubich",
+    "email": "blue@macaw.me"
+  },
+  "repository": {
+    "url": "git+https://github.com/macawkit/structures",
+    "type": "git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "@eslint/js": "^9.8.0",
+    "@types/eslint__js": "^8.42.3",
+    "typescript-eslint": "^7.17.0",
+    "@types/node": "^20.14.11",
+    "esbuild": "^0.23.0",
+    "typescript": "^5.5.4"
+  }
+}

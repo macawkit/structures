@@ -1,0 +1,26 @@
+name: Main CI
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  lint:
+    name: Run Lint Check
+    uses: ./.github/workflows/lint.yml
+
+  check:
+    needs: lint
+    name: Run checks for Node version ${{ matrix.node-version }}
+    strategy:
+      matrix:
+        node-version: [ '18.x', '20.x', '22.x' ]
+
+    uses: ./.github/workflows/check.yml
+    with:
+      node-version: ${{ matrix.node-version }}
