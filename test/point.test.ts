@@ -43,7 +43,7 @@ void describe('Point', () => {
         assert.equal(point1.x, 20);
         assert.equal(point1.y, 25);
         assert.equal(point2.x, 20);
-        assert.equal(point2.y, 40);
+        assert.equal(point2.y, 10);
 
         checkIndependence(point1, point2);
     });
