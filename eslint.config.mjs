@@ -49,6 +49,12 @@ export default tslint.config(
                     }
                 }
             }],
+            '@typescript-eslint/explicit-member-accessibility': ['error', {
+                accessibility: 'explicit',
+                overrides: {
+                    constructors: 'no-public'
+                }
+            }],
             '@typescript-eslint/no-non-null-assertion': 'off'
         }
     }

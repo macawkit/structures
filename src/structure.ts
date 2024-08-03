@@ -1,5 +1,9 @@
 interface Structure<T> {
     copy (): T;
+
+    get valid(): boolean;
+    equals (other: T, epsilon?: number): boolean;
+
     add (other: T): void;
     sub (other: T): void;
 

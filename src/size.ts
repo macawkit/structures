@@ -6,8 +6,24 @@ export default class Size implements Structure<Size>{
         public height: number
     ) {}
 
+    public get valid (): boolean {
+        return this.width >= 0 && this.height >= 0;
+    }
+    public get square (): number {
+        return this.width * this.height;
+    }
+
     public copy (): Size {
         return new Size(this.width, this.height);
+    }
+    public equals (other: Size, epsilon?: number): boolean {
+        if (epsilon)
+            return (
+                Math.abs(this.width - other.width) < epsilon &&
+                Math.abs(this.height - other.height) < epsilon
+            );
+
+        return this.width === other.width && this.height === other.width;
     }
     public add (other: Size): void {
         this.width += other.width;
