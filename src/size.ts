@@ -7,7 +7,9 @@ export default class Size implements Structure<Size>{
     ) {}
 
     public get valid (): boolean {
-        return this.width >= 0 && this.height >= 0;
+        return this.width === this.width &&
+            this.height === this.height &&
+            this.width >= 0 && this.height >= 0;
     }
     public get square (): number {
         return this.width * this.height;
@@ -23,7 +25,7 @@ export default class Size implements Structure<Size>{
                 Math.abs(this.height - other.height) < epsilon
             );
 
-        return this.width === other.width && this.height === other.width;
+        return this.width === other.width && this.height === other.height;
     }
     public add (other: Size): void {
         this.width += other.width;

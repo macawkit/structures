@@ -6,8 +6,10 @@ export default class Point implements Structure<Point>{
         public y: number
     ) {}
 
-    //eslint-disable-next-line @typescript-eslint/class-literal-property-style
-    public get valid (): boolean { return true; }
+    public get valid (): boolean {
+        return this.x === this.x &&
+            this.y === this.y;
+    }
     public copy (): Point {
         return new Point(this.x, this.y);
     }
