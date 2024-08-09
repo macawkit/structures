@@ -11,3 +11,4 @@ This project provides utilities to be reused in Macaw Kit projects.
 
 ### Interfaces:
 - `Structure` - A common interface for all structures
+- `OneDimensional` - An interface for one dimensional structures like `Size` and `Point`

@@ -1,6 +1,8 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
 
+import { checkSizeIndependence } from './utils';
+
 import { Size } from '../src';
 
 void describe('Size', () => {
@@ -19,7 +21,7 @@ void describe('Size', () => {
         assert.equal(size2.width, 10);
         assert.equal(size2.height, 5);
 
-        checkIndependence(size1, size2);
+        checkSizeIndependence(size1, size2);
     });
     void test('add', () => {
         const size1 = new Size(15, 20);
@@ -32,7 +34,7 @@ void describe('Size', () => {
         assert.equal(size2.width, 5);
         assert.equal(size2.height, 30);
 
-        checkIndependence(size1, size2);
+        checkSizeIndependence(size1, size2);
     });
     void test('sub', () => {
         const size1 = new Size(40, 35);
@@ -45,7 +47,7 @@ void describe('Size', () => {
         assert.equal(size2.width, 20);
         assert.equal(size2.height, 10);
 
-        checkIndependence(size1, size2);
+        checkSizeIndependence(size1, size2);
     });
     void test('plus', () => {
         const size1 = new Size(60, 10);
@@ -60,9 +62,9 @@ void describe('Size', () => {
         assert.equal(size3.width, 85);
         assert.equal(size3.height, 40);
 
-        checkIndependence(size1, size2);
-        checkIndependence(size1, size3);
-        checkIndependence(size2, size3);
+        checkSizeIndependence(size1, size2);
+        checkSizeIndependence(size1, size3);
+        checkSizeIndependence(size2, size3);
     });
     void test('minus', () => {
         const size1 = new Size(37, 18);
@@ -77,9 +79,9 @@ void describe('Size', () => {
         assert.equal(size3.width, 30);
         assert.equal(size3.height, 10);
 
-        checkIndependence(size1, size2);
-        checkIndependence(size1, size3);
-        checkIndependence(size2, size3);
+        checkSizeIndependence(size1, size2);
+        checkSizeIndependence(size1, size3);
+        checkSizeIndependence(size2, size3);
     });
     void test('equals', () => {
         const size1 = new Size(74, 28);
@@ -87,7 +89,7 @@ void describe('Size', () => {
 
         assert.equal(size1.equals(size2), true);
         assert.equal(size2.equals(size1), true);
-        checkIndependence(size1, size2);
+        checkSizeIndependence(size1, size2);
 
         size1.width = 72;
         size1.height = 27;
@@ -140,29 +142,3 @@ void describe('Size', () => {
         assert.equal(size1.square, 9 * 16);
     });
 });
-
-function checkIndependence (s1: Size, s2: Size) {
-    const w0 = s1.width;
-    const h0 = s1.height;
-
-    const w1 = Math.trunc(Math.random() * 100);
-    const h1 = Math.trunc(Math.random() * 100);
-    const w2 = Math.trunc(Math.random() * 100);
-    const h2 = Math.trunc(Math.random() * 100);
-
-    s2.width = w2;
-    s2.height = h2;
-
-    assert.equal(s1.width, w0);
-    assert.equal(s1.height, h0);
-    assert.equal(s2.width, w2);
-    assert.equal(s2.height, h2);
-
-    s1.width = w1;
-    s1.height = h1;
-
-    assert.equal(s1.width, w1);
-    assert.equal(s1.height, h1);
-    assert.equal(s2.width, w2);
-    assert.equal(s2.height, h2);
-}

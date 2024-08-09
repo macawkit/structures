@@ -1,6 +1,8 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
 
+import { checkPointIndependence } from './utils';
+
 import { Point } from '../src';
 
 void describe('Point', () => {
@@ -19,7 +21,7 @@ void describe('Point', () => {
         assert.equal(point2.x, 10);
         assert.equal(point2.y, 5);
 
-        checkIndependence(point1, point2);
+        checkPointIndependence(point1, point2);
     });
     void test('add', () => {
         const point1 = new Point(15, 20);
@@ -32,7 +34,7 @@ void describe('Point', () => {
         assert.equal(point2.x, 5);
         assert.equal(point2.y, 30);
 
-        checkIndependence(point1, point2);
+        checkPointIndependence(point1, point2);
     });
     void test('sub', () => {
         const point1 = new Point(40, 35);
@@ -45,7 +47,7 @@ void describe('Point', () => {
         assert.equal(point2.x, 20);
         assert.equal(point2.y, 10);
 
-        checkIndependence(point1, point2);
+        checkPointIndependence(point1, point2);
     });
     void test('plus', () => {
         const point1 = new Point(60, 10);
@@ -60,9 +62,9 @@ void describe('Point', () => {
         assert.equal(point3.x, 85);
         assert.equal(point3.y, 40);
 
-        checkIndependence(point1, point2);
-        checkIndependence(point1, point3);
-        checkIndependence(point2, point3);
+        checkPointIndependence(point1, point2);
+        checkPointIndependence(point1, point3);
+        checkPointIndependence(point2, point3);
     });
     void test('minus', () => {
         const point1 = new Point(37, 18);
@@ -77,9 +79,9 @@ void describe('Point', () => {
         assert.equal(point3.x, 30);
         assert.equal(point3.y, 10);
 
-        checkIndependence(point1, point2);
-        checkIndependence(point1, point3);
-        checkIndependence(point2, point3);
+        checkPointIndependence(point1, point2);
+        checkPointIndependence(point1, point3);
+        checkPointIndependence(point2, point3);
     });
     void test('equals', () => {
         const point1 = new Point(74, 28);
@@ -87,7 +89,7 @@ void describe('Point', () => {
 
         assert.equal(point1.equals(point2), true);
         assert.equal(point2.equals(point1), true);
-        checkIndependence(point1, point2);
+        checkPointIndependence(point1, point2);
 
         point1.x = 72;
         point1.y = 27;
@@ -125,28 +127,3 @@ void describe('Point', () => {
     });
 });
 
-function checkIndependence (p1: Point, p2: Point) {
-    const x0 = p1.x;
-    const y0 = p1.y;
-
-    const x1 = Math.trunc(Math.random() * 100);
-    const y1 = Math.trunc(Math.random() * 100);
-    const x2 = Math.trunc(Math.random() * 100);
-    const y2 = Math.trunc(Math.random() * 100);
-
-    p2.x = x2;
-    p2.y = y2;
-
-    assert.equal(p1.x, x0);
-    assert.equal(p1.y, y0);
-    assert.equal(p2.x, x2);
-    assert.equal(p2.y, y2);
-
-    p1.x = x1;
-    p1.y = y1;
-
-    assert.equal(p1.x, x1);
-    assert.equal(p1.y, y1);
-    assert.equal(p2.x, x2);
-    assert.equal(p2.y, y2);
-}
