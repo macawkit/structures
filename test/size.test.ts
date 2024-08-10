@@ -3,7 +3,7 @@ import assert from 'node:assert';
 
 import { checkSizeIndependence } from './utils';
 
-import { Point, Size } from '../src';
+import { Size } from '../src';
 
 void describe('Size', () => {
     void test('creation', () => {

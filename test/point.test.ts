@@ -1,9 +1,9 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
 
-import { checkPointIndependence, checkSizeIndependence } from './utils';
+import { checkPointIndependence } from './utils';
 
-import { Point, Quadrant, Size } from '../src';
+import { Point, Quadrant } from '../src';
 
 void describe('Point', () => {
     void test('creation', () => {
