@@ -10,7 +10,7 @@ const BuildType = {
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const type = BuildType[(process.argv[2] || '').toLocaleLowerCase()] || BuildType.debug;
-if (type === BuildType.test)
+if (type === BuildType.test) {
     await esbuild.build({
         entryPoints: ['./test/index.ts'],
         bundle: true,
@@ -21,7 +21,7 @@ if (type === BuildType.test)
         sourcemap: true,
         sourcesContent: true
     });
-else {
+} else {
     const result = await esbuild.build({
         entryPoints: ['./src/index.ts'],
         bundle: true,

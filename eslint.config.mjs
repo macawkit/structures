@@ -35,7 +35,7 @@ export default tslint.config(
                 after: true
             }],
             'comma-dangle': ['error', 'never'],
-            'curly': ['error', 'multi'],
+            'curly': ['error', 'multi-or-nest', 'consistent'],
             'semi': ['error', 'always'],
             'object-curly-spacing': ['error', 'always'],
             'space-infix-ops': 'error',

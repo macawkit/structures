@@ -3,7 +3,7 @@ import assert from 'node:assert';
 
 import { checkSizeIndependence } from './utils';
 
-import { Size } from '../src';
+import { Point, Size } from '../src';
 
 void describe('Size', () => {
     void test('creation', () => {
@@ -141,4 +141,69 @@ void describe('Size', () => {
         assert.equal(size1.valid, true);
         assert.equal(size1.square, 9 * 16);
     });
+    void test('reset', () => {
+        const size = new Size(50, 30);
+
+        size.reset();
+        assert.equal(size.width, 0);
+        assert.equal(size.height, 0);
+
+        size.width = NaN;
+        assert.equal(size.valid, false);
+        size.reset();
+        assert.equal(size.valid, true);
+        assert.equal(size.width, 0);
+        assert.equal(size.height, 0);
+    });
+    void test('min-max', () => {
+        const size1 = new Size(50, 30);
+        const size2 = new Size(10, 80);
+
+        const min = size1.minimal(size2);
+        const max = size1.maximal(size2);
+
+        assert.equal(min.width, 10);
+        assert.equal(min.height, 30);
+        assert.equal(max.width, 50);
+        assert.equal(max.height, 80);
+
+        min.max(size1);
+        max.min(size2);
+
+        assert.equal(min.width, 50);
+        assert.equal(min.height, 30);
+        assert.equal(max.width, 10);
+        assert.equal(max.height, 80);
+
+        checkSizeIndependence(min, size1);
+        checkSizeIndependence(min, size2);
+        checkSizeIndependence(max, size1);
+        checkSizeIndependence(max, size2);
+        checkSizeIndependence(min, max);
+
+        const sMin = Size.min(1, 2, 3, 4);
+        const sMax = Size.max(1, 2, 3, 4);
+        assert.equal(sMin.width, 1);
+        assert.equal(sMin.height, 2);
+        assert.equal(sMax.width, 3);
+        assert.equal(sMax.height, 4);
+    });
+    void test('positive', () => {
+        const size = new Size(0, 0);
+        assert.equal(size.positive, false);
+
+        size.width = 1;
+        assert.equal(size.positive, false);
+
+        size.height = 1;
+        assert.equal(size.positive, true);
+
+        size.height = NaN;
+        assert.equal(size.positive, false);
+
+        size.height = -1;
+        size.width = -1;
+        assert.equal(size.positive, false);
+    });
+
 });

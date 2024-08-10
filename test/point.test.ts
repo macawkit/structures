@@ -1,9 +1,9 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
 
-import { checkPointIndependence } from './utils';
+import { checkPointIndependence, checkSizeIndependence } from './utils';
 
-import { Point } from '../src';
+import { Point, Quadrant, Size } from '../src';
 
 void describe('Point', () => {
     void test('creation', () => {
@@ -124,6 +124,84 @@ void describe('Point', () => {
 
         point1.y = NaN;
         assert.equal(point1.valid, false);
+    });
+    void test('reset', () => {
+        const point1 = new Point(50, 30);
+
+        point1.reset();
+        assert.equal(point1.x, 0);
+        assert.equal(point1.y, 0);
+
+        point1.y = NaN;
+        assert.equal(point1.valid, false);
+        point1.reset();
+        assert.equal(point1.valid, true);
+        assert.equal(point1.x, 0);
+        assert.equal(point1.y, 0);
+    });
+    void test('min-max', () => {
+        const p1 = new Point(20, 70);
+        const p2 = new Point(5, 95);
+
+        const min = p1.minimal(p2);
+        const max = p1.maximal(p2);
+
+        assert.equal(min.x, 5);
+        assert.equal(min.y, 70);
+        assert.equal(max.x, 20);
+        assert.equal(max.y, 95);
+
+        min.max(p1);
+        max.min(p2);
+
+        assert.equal(min.x, 20);
+        assert.equal(min.y, 70);
+        assert.equal(max.x, 5);
+        assert.equal(max.y, 95);
+
+        checkPointIndependence(min, p1);
+        checkPointIndependence(min, p2);
+        checkPointIndependence(max, p1);
+        checkPointIndependence(max, p2);
+        checkPointIndependence(min, max);
+
+        const sMin = Point.min(1, 2, 3, 4);
+        const sMax = Point.max(1, 2, 3, 4);
+        assert.equal(sMin.x, 1);
+        assert.equal(sMin.y, 2);
+        assert.equal(sMax.x, 3);
+        assert.equal(sMax.y, 4);
+    });
+    void test('quadrant', () => {
+        const ref = new Point(5, 5);
+        const point = new Point(5, 5);
+
+        assert.equal(point.quadrant(ref), Quadrant.all);
+
+        point.x = 7;
+        point.y = 7;
+        assert.equal(point.quadrant(ref), Quadrant.first);
+
+        point.x = 5;
+        assert.equal(point.quadrant(ref), Quadrant.firstSecond);
+
+        point.x = 3;
+        assert.equal(point.quadrant(ref), Quadrant.second);
+
+        point.y = 5;
+        assert.equal(point.quadrant(ref), Quadrant.secondThird);
+
+        point.y = 3;
+        assert.equal(point.quadrant(ref), Quadrant.third);
+
+        point.x = 5;
+        assert.equal(point.quadrant(ref), Quadrant.thirdForth);
+
+        point.x = 7;
+        assert.equal(point.quadrant(ref), Quadrant.forth);
+
+        point.y = 5;
+        assert.equal(point.quadrant(ref), Quadrant.forthFirst);
     });
 });
 
