@@ -60,6 +60,18 @@ export default class Size implements OneDimensional<Size>{
 
         return this;
     }
+    public set (width: number, height: number): this {
+        this.width = width;
+        this.height = height;
+
+        return this;
+    }
+    public adjust (width: number, height: number): this {
+        this.width += width;
+        this.height += height;
+
+        return this;
+    }
 
     public plus (other: Size): Size {
         return new Size(

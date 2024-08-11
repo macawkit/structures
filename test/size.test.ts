@@ -205,5 +205,15 @@ void describe('Size', () => {
         size.width = -1;
         assert.equal(size.positive, false);
     });
+    void test('change', () => {
+        const size = new Size(7, 4);
 
+        size.set(15, 32);
+        assert.equal(size.width, 15);
+        assert.equal(size.height, 32);
+
+        size.adjust(7, -9);
+        assert.equal(size.width, 22);
+        assert.equal(size.height, 23);
+    });
 });

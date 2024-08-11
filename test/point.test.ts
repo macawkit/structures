@@ -203,5 +203,16 @@ void describe('Point', () => {
         point.y = 5;
         assert.equal(point.quadrant(ref), Quadrant.forthFirst);
     });
+    void test('change', () => {
+        const point = new Point(0, 0);
+
+        point.set(6, 8);
+        assert.equal(point.x, 6);
+        assert.equal(point.y, 8);
+
+        point.move(-2, 3);
+        assert.equal(point.x, 4);
+        assert.equal(point.y, 11);
+    });
 });
 

@@ -9,7 +9,7 @@ export default class Rect implements Structure<Rect> {
     ) {}
 
     public get valid (): boolean {
-        return this.size.valid;
+        return this.size.valid && this.point.valid;
     }
 
     public get x (): number {return this.point.x;}

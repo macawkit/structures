@@ -52,6 +52,18 @@ export default class Point implements OneDimensional<Point>{
 
         return this;
     }
+    public set (x: number, y: number): this {
+        this.x = x;
+        this.y = y;
+
+        return this;
+    }
+    public move (x: number, y: number): this {
+        this.x += x;
+        this.y += y;
+
+        return this;
+    }
 
     public plus (other: Point): Point {
         return new Point(this.x + other.x, this.y + other.y);
@@ -108,13 +120,13 @@ export default class Point implements OneDimensional<Point>{
 }
 
 export enum Quadrant {
-    all,
-    first,
-    firstSecond,
-    second,
-    secondThird,
-    third,
-    thirdForth,
-    forth,
-    forthFirst
+    first           = 0b0001,
+    second          = 0b0010,
+    third           = 0b0100,
+    forth           = 0b1000,
+    firstSecond     = 0b0011,
+    secondThird     = 0b0110,
+    thirdForth      = 0b1100,
+    forthFirst      = 0b1001,
+    all             = 0b1111
 }
