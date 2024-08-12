@@ -74,6 +74,13 @@ export default class Rect implements Structure<Rect> {
         this.size.height += yDiff;
     }
 
+    public set (x: number, y: number, width: number, height: number): this {
+        this.point.set(x, y);
+        this.size.set(width, height);
+
+        return this;
+    }
+
     //todo: not sure about these guys, they will depend on coordinate system
     public get top (): number {
         return this.point.y;
@@ -118,7 +125,7 @@ export default class Rect implements Structure<Rect> {
     }
     public intersection (other: Rect): Rect {
         const p1 = this.point.maximal(other.point);
-        const p2 = Point.max(this.x2, this.y2, other.x2, other.y2);
+        const p2 = Point.min(this.x2, this.y2, other.x2, other.y2);
 
         const width = p2.x - p1.x;
         const height = p2.y - p1.y;

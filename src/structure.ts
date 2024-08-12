@@ -1,5 +1,6 @@
 interface Structure<T> {
     copy (): T;
+    // assign (other: T): T;
 
     get valid (): boolean;
     equals (other: T, epsilon?: number): boolean;
