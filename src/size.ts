@@ -1,6 +1,6 @@
-import { OneDimensional } from './structure';
+import { Coordinate } from './structure';
 
-export default class Size implements OneDimensional<Size>{
+export default class Size implements Coordinate<Size>{
     constructor (
         public width: number,
         public height: number

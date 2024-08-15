@@ -27,7 +27,7 @@
     "email": "blue@macaw.me"
   },
   "repository": {
-    "url": "git+https://github.com/macawkit/structures",
+    "url": "git+https://github.com/macawkit/structures.git",
     "type": "git"
   },
   "license": "MIT",

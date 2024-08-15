@@ -1,6 +1,6 @@
-import { OneDimensional } from './structure';
+import { Coordinate } from './structure';
 
-export default class Point implements OneDimensional<Point>{
+export default class Point implements Coordinate<Point>{
     constructor (
         public x: number,
         public y: number

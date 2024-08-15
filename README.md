@@ -8,7 +8,9 @@ This project provides utilities to be reused in Macaw Kit projects.
 - `Point` - Represents a point in 2D space.
 - `Size` - Represents a box size of and object of 2D space.
 - `Rect` - Represents a rectangle in 2D space with position and size.
+- `Color` - Represents a color.
 
 ### Interfaces:
 - `Structure` - A common interface for all structures
-- `OneDimensional` - An interface for one dimensional structures like `Size` and `Point`
+- `Coordinate` - An interface for coordinate related structures like `Size` and `Point`
+- `Operable` - An interface for objects that have some mathematical operators 
