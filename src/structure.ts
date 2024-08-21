@@ -5,21 +5,20 @@ interface Structure<T> {
     get valid (): boolean;
     equals (other: T, epsilon?: number): boolean;
     reset (): void;
+    toString (): string;
 }
 
 export default Structure;
 
-export interface Operable<T> extends Structure<T> {
+export interface Coordinate<T> extends Structure<T> {
     add (other: T): T;
     sub (other: T): T;
 
-    plus (other: T): T;
-    minus (other: T): T;
-}
-
-export interface Coordinate<T> extends Operable<T> {
     min (other: T): T;
     max (other: T): T;
+
+    plus (other: T): T;
+    minus (other: T): T;
 
     minimal (other: T): T;
     maximal (other: T): T;

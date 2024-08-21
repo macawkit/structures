@@ -1,11 +1,11 @@
-import { Operable } from './structure';
+import Structure from './structure';
 
-export default class Color implements Operable<Color> {
+export default class Color implements Structure<Color> {
     constructor (
         public r: number,
         public g: number,
         public b: number,
-        public a: number
+        public a = 1
     ) {}
 
     public copy (): Color {
@@ -21,9 +21,9 @@ export default class Color implements Operable<Color> {
     }
     public get valid (): boolean {
         return (
-            this.r === this.r &&
-            this.g === this.g &&
-            this.b === this.b &&
+            this.r >= 0 &&
+            this.g >= 0 &&
+            this.b >= 0 &&
             this.a >= 0 && this.a <= 1
         );
     }
@@ -44,25 +44,43 @@ export default class Color implements Operable<Color> {
             this.a === other.a
         );
     }
+    public toString (): string {
+        return `Color(${this.r.toString()}, ${this.g.toString()}, ${this.b.toString()}, ${this.a.toString()})`;
+    }
 
-    public add (other: Color): this {
-        const comp = other.a * (1 - this.a);
+    public over (background: Color): this {
+        const comp = background.a * (1 - this.a);
         const a = this.a + comp;
 
-        this.r = (this.r * this.a + other.r * comp) / a;
-        this.g = (this.g * this.a + other.g * comp) / a;
-        this.b = (this.b * this.a + other.b * comp) / a;
+        if (a > 0) {
+            this.r = (this.r * this.a + background.r * comp) / a;
+            this.g = (this.g * this.a + background.g * comp) / a;
+            this.b = (this.b * this.a + background.b * comp) / a;
+        }
         this.a = a;
 
         return this;
     }
-    public sub (other: Color): this {
-        const comp = other.a * (1 - this.a);
+    public under (foreground: Color): this {
+        const comp = this.a * (1 - foreground.a);
+        const a = foreground.a + comp;
+
+        if (a > 0) {
+            this.r = (foreground.r * foreground.a + this.r * comp) / a;
+            this.g = (foreground.g * foreground.a + this.g * comp) / a;
+            this.b = (foreground.b * foreground.a + this.b * comp) / a;
+        }
+        this.a = a;
+
+        return this;
+    }
+    public subFromBottom (background: Color): this {
+        const comp = background.a * (1 - this.a);
         const a = Math.max(this.a - comp, 0);
 
-        this.r = Math.max((this.r * this.a - other.r * comp), 0);
-        this.g = Math.max((this.g * this.a - other.g * comp), 0);
-        this.b = Math.max((this.b * this.a - other.b * comp), 0);
+        this.r = Math.max((this.r * this.a - background.r * comp), 0);
+        this.g = Math.max((this.g * this.a - background.g * comp), 0);
+        this.b = Math.max((this.b * this.a - background.b * comp), 0);
         this.a = a;
 
         if (a > 0) {
@@ -73,25 +91,21 @@ export default class Color implements Operable<Color> {
 
         return this;
     }
+    public subFromTop (foreground: Color): this {
+        const comp = this.a * (1 - foreground.a);
+        const a = Math.max(foreground.a - comp, 0);
 
-    public plus (other: Color): Color {
-        const comp = other.a * (1 - this.a);
+        this.r = Math.max((foreground.r * foreground.a - this.r * comp), 0);
+        this.g = Math.max((foreground.g * foreground.a - this.g * comp), 0);
+        this.b = Math.max((foreground.b * foreground.a - this.b * comp), 0);
+        this.a = a;
 
-        const a = this.a + comp;
-        const r = (this.r * this.a + other.r * comp) / a;
-        const g = (this.g * this.a + other.g * comp) / a;
-        const b = (this.b * this.a + other.b * comp) / a;
+        if (a > 0) {
+            this.r /= a;
+            this.g /= a;
+            this.b /= a;
+        }
 
-        return new Color(r, g, b, a);
-    }
-    public minus (other: Color): Color {
-        const comp = other.a * (1 - this.a);
-        const a = Math.max(this.a - comp, 0);
-
-        const r = Math.max((this.r * this.a - other.r * comp) / (a || 1), 0);
-        const g = Math.max((this.g * this.a - other.g * comp) / (a || 1), 0);
-        const b = Math.max((this.b * this.a - other.b * comp) / (a || 1), 0);
-
-        return new Color(r, g, b, a);
+        return this;
     }
 }

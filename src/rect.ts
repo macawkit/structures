@@ -108,6 +108,9 @@ export default class Rect implements Structure<Rect> {
         this.point.reset();
         this.size.reset();
     }
+    public toString (): string {
+        return `Rect(${this.x.toString()}, ${this.y.toString()}, ${this.width.toString()}, ${this.height.toString()})`;
+    }
 
     public intersect (other: Rect): this {
         const x2 = Math.min(this.x2, other.x2);

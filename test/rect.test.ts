@@ -372,4 +372,8 @@ void describe('Rect', () => {
         checkRectIndependence(r3, r2);
         checkRectIndependence(r3, r1);
     });
+    void test('toString', () => {
+        const rect = new Rect(new Point(782, 378), new Size(13, 938));
+        assert.equal(rect.toString(), 'Rect(782, 378, 13, 938)');
+    });
 });

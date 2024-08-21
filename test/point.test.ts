@@ -214,5 +214,9 @@ void describe('Point', () => {
         assert.equal(point.x, 4);
         assert.equal(point.y, 11);
     });
+    void test('toString', () => {
+        const point = new Point(234, -7123);
+        assert.equal(point.toString(), 'Point(234, -7123)');
+    });
 });
 

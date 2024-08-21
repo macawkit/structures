@@ -27,6 +27,9 @@ export default class Point implements Coordinate<Point>{
         this.x = 0;
         this.y = 0;
     }
+    public toString (): string {
+        return `Point(${this.x.toString()}, ${this.y.toString()})`;
+    }
 
     public add (other: Point): this {
         this.x += other.x;

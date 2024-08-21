@@ -35,6 +35,9 @@ export default class Size implements Coordinate<Size>{
         this.width = 0;
         this.height = 0;
     }
+    public toString (): string {
+        return `Size(${this.width.toString()}, ${this.height.toString()})`;
+    }
 
     public add (other: Size): this {
         this.width += other.width;

@@ -216,4 +216,8 @@ void describe('Size', () => {
         assert.equal(size.width, 22);
         assert.equal(size.height, 23);
     });
+    void test('toString', () => {
+        const size = new Size(640, 480);
+        assert.equal(size.toString(), 'Size(640, 480)');
+    });
 });

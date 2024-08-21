@@ -13,4 +13,3 @@ This project provides utilities to be reused in Macaw Kit projects.
 ### Interfaces:
 - `Structure` - A common interface for all structures
 - `Coordinate` - An interface for coordinate related structures like `Size` and `Point`
-- `Operable` - An interface for objects that have some mathematical operators 
