@@ -11,6 +11,14 @@ export default class Color implements Structure<Color> {
     public copy (): Color {
         return new Color(this.r, this.g, this.b, this.a);
     }
+    public assign (other: Color): this {
+        this.r = other.r;
+        this.g = other.g;
+        this.b = other.b;
+        this.a = other.a;
+
+        return this;
+    }
     public reset (): this {
         this.r = 0;
         this.g = 0;
@@ -71,40 +79,6 @@ export default class Color implements Structure<Color> {
             this.b = (foreground.b * foreground.a + this.b * comp) / a;
         }
         this.a = a;
-
-        return this;
-    }
-    public subFromBottom (background: Color): this {
-        const comp = background.a * (1 - this.a);
-        const a = Math.max(this.a - comp, 0);
-
-        this.r = Math.max((this.r * this.a - background.r * comp), 0);
-        this.g = Math.max((this.g * this.a - background.g * comp), 0);
-        this.b = Math.max((this.b * this.a - background.b * comp), 0);
-        this.a = a;
-
-        if (a > 0) {
-            this.r /= a;
-            this.g /= a;
-            this.b /= a;
-        }
-
-        return this;
-    }
-    public subFromTop (foreground: Color): this {
-        const comp = this.a * (1 - foreground.a);
-        const a = Math.max(foreground.a - comp, 0);
-
-        this.r = Math.max((foreground.r * foreground.a - this.r * comp), 0);
-        this.g = Math.max((foreground.g * foreground.a - this.g * comp), 0);
-        this.b = Math.max((foreground.b * foreground.a - this.b * comp), 0);
-        this.a = a;
-
-        if (a > 0) {
-            this.r /= a;
-            this.g /= a;
-            this.b /= a;
-        }
 
         return this;
     }

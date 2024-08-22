@@ -21,6 +21,14 @@ export default class Size implements Coordinate<Size>{
     public copy (): Size {
         return new Size(this.width, this.height);
     }
+
+    public assign (other: Size): this {
+        this.width = other.width;
+        this.height = other.height;
+
+        return this;
+    }
+
     public equals (other: Size, epsilon?: number): boolean {
         if (epsilon) {
             return (

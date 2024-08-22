@@ -13,6 +13,14 @@ export default class Point implements Coordinate<Point>{
     public copy (): Point {
         return new Point(this.x, this.y);
     }
+
+    public assign (other: Point): this {
+        this.x = other.x;
+        this.y = other.y;
+
+        return this;
+    }
+
     public equals (other: Point, epsilon?: number): boolean {
         if (epsilon) {
             return (

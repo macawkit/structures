@@ -98,6 +98,14 @@ export default class Rect implements Structure<Rect> {
     public copy (): Rect {
         return new Rect(this.point.copy(), this.size.copy());
     }
+
+    public assign (other: Rect): this {
+        this.point.assign(other.point);
+        this.size.assign(other.size);
+
+        return this;
+    }
+
     public equals (other: Rect, epsilon?: number): boolean {
         return (
             this.point.equals(other.point, epsilon) &&

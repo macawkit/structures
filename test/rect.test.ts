@@ -376,4 +376,21 @@ void describe('Rect', () => {
         const rect = new Rect(new Point(782, 378), new Size(13, 938));
         assert.equal(rect.toString(), 'Rect(782, 378, 13, 938)');
     });
+    void test('assign', () => {
+        const r1 = Rect.fromNumbers(4, 5, 20, 30);
+        const r2 = Rect.fromNumbers(-7, -48, 10, 55);
+
+        r1.assign(r2);
+
+        assert.equal(r1.x, -7);
+        assert.equal(r1.y, -48);
+        assert.equal(r1.width, 10);
+        assert.equal(r1.height, 55);
+        assert.equal(r2.x, -7);
+        assert.equal(r2.y, -48);
+        assert.equal(r2.width, 10);
+        assert.equal(r2.height, 55);
+
+        checkRectIndependence(r1, r2);
+    });
 });

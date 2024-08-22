@@ -96,6 +96,24 @@ void describe('Color', () => {
 
         assert.equal(color.toString(), 'Color(0.6, 0.2, 0.4, 0.8)');
     });
+
+    void test('assign', () => {
+        const c1 = new Color(0.2, 0.17, 0.34, .04);
+        const c2 = new Color(0.87, 0.24, .59, 0.1);
+
+        c1.assign(c2);
+
+        assert.equal(c1.r, 0.87);
+        assert.equal(c1.g, 0.24);
+        assert.equal(c1.b, .59);
+        assert.equal(c1.a, 0.1);
+        assert.equal(c2.r, 0.87);
+        assert.equal(c2.g, 0.24);
+        assert.equal(c2.b, .59);
+        assert.equal(c2.a, 0.1);
+
+        checkColorIndependence(c1, c2);
+    });
 });
 
 export function checkColorIndependence (c1: Color, c2: Color): void {

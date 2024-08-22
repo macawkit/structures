@@ -220,4 +220,17 @@ void describe('Size', () => {
         const size = new Size(640, 480);
         assert.equal(size.toString(), 'Size(640, 480)');
     });
+    void test('assign', () => {
+        const s1 = new Size(400, 900);
+        const s2 = new Size(300, 500);
+
+        s1.assign(s2);
+
+        assert.equal(s1.width, 300);
+        assert.equal(s1.height, 500);
+        assert.equal(s2.width, 300);
+        assert.equal(s2.height, 500);
+
+        checkSizeIndependence(s1, s2);
+    });
 });

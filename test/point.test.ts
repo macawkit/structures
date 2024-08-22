@@ -218,5 +218,18 @@ void describe('Point', () => {
         const point = new Point(234, -7123);
         assert.equal(point.toString(), 'Point(234, -7123)');
     });
+    void test('assign', () => {
+        const p1 = new Point(-57, 83);
+        const p2 = new Point(399, 64);
+
+        p1.assign(p2);
+
+        assert.equal(p1.x, 399);
+        assert.equal(p1.y, 64);
+        assert.equal(p2.x, 399);
+        assert.equal(p2.y, 64);
+
+        checkPointIndependence(p1, p2);
+    });
 });
 
