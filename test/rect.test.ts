@@ -1,7 +1,7 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
 
-import { checkPointIndependence, checkRectIndependence } from './utils';
+import { checkPointIndependence, checkRectIndependence, testProperties } from './utils';
 
 import { Rect, Point, Size } from '../src';
 
@@ -143,6 +143,38 @@ void describe('Rect', () => {
         assert.equal(rect.y2, 40);
         assert.equal(rect.width, 40);
         assert.equal(rect.height, 20);
+
+        rect.x1 += 20;
+        assert.equal(rect.x1, 30);
+        assert.equal(rect.y1, 20);
+        assert.equal(rect.x2, 50);
+        assert.equal(rect.y2, 40);
+        assert.equal(rect.width, 20);
+        assert.equal(rect.height, 20);
+
+        rect.x2 += 10;
+        assert.equal(rect.x1, 30);
+        assert.equal(rect.y1, 20);
+        assert.equal(rect.x2, 60);
+        assert.equal(rect.y2, 40);
+        assert.equal(rect.width, 30);
+        assert.equal(rect.height, 20);
+
+        rect.y1 += 5;
+        assert.equal(rect.x1, 30);
+        assert.equal(rect.y1, 25);
+        assert.equal(rect.x2, 60);
+        assert.equal(rect.y2, 40);
+        assert.equal(rect.width, 30);
+        assert.equal(rect.height, 15);
+
+        rect.y2 += 15;
+        assert.equal(rect.x1, 30);
+        assert.equal(rect.y1, 25);
+        assert.equal(rect.x2, 60);
+        assert.equal(rect.y2, 55);
+        assert.equal(rect.width, 30);
+        assert.equal(rect.height, 30);
 
         checkPointIndependence(rect.point, rect.p1);
         checkPointIndependence(rect.point, rect.p2);
@@ -392,5 +424,16 @@ void describe('Rect', () => {
         assert.equal(r2.height, 55);
 
         checkRectIndependence(r1, r2);
+    });
+    void test('valid', () => {
+        const r = Rect.fromNumbers(34, 52, 111, 45);
+
+        assert.equal(r.valid, true);
+
+        testProperties(r, ['x', 'y', 'width', 'height'], NaN, () => r.valid, false);
+        testProperties(r, ['width', 'height'], -7, () => r.valid, false);
+        testProperties(r, ['width', 'height'], 0, () => r.valid, true);
+
+        assert.equal(r.valid, true);
     });
 });

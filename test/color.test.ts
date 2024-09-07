@@ -3,6 +3,8 @@ import assert from 'node:assert';
 
 import { Color } from '../src';
 
+import { testProperties } from './utils';
+
 void describe('Color', () => {
     void test('creation', () => {
         const c = new Color(0, 5, 2);
@@ -113,6 +115,72 @@ void describe('Color', () => {
         assert.equal(c2.a, 0.1);
 
         checkColorIndependence(c1, c2);
+    });
+    void test('equals', () => {
+        const c1 = new Color(.46, .34, .85, .74);
+        const c2 = new Color(.46, .34, .85, .74);
+
+        assert.equal(c1.equals(c2), true);
+        assert.equal(c2.equals(c1), true);
+
+        testProperties(c2, ['r', 'g', 'b', 'a'], 0.43, () => c2.equals(c1) || c1.equals(c2), false);
+        testProperties(c2, ['r', 'g', 'b', 'a'], NaN, () => c2.equals(c1) || c1.equals(c2), false);
+        testProperties(c2, ['r', 'g', 'b', 'a'], 0, () => c2.equals(c1) || c1.equals(c2), false);
+
+        assert.equal(c1.equals(c2), true);
+        assert.equal(c2.equals(c1), true);
+
+        c2.r -= 0.005;
+        assert.equal(c1.equals(c2), false);
+        assert.equal(c1.equals(c2, 0.01), true);
+        c2.r -= 0.006;
+        assert.equal(c1.equals(c2, 0.01), false);
+
+        c2.r = .46;
+        c2.g += 0.005;
+        assert.equal(c1.equals(c2), false);
+        assert.equal(c1.equals(c2, 0.01), true);
+        c2.g += 0.006;
+        assert.equal(c1.equals(c2, 0.01), false);
+
+        c2.g = .34;
+        c2.b += 0.008;
+        assert.equal(c1.equals(c2), false);
+        assert.equal(c1.equals(c2, 0.01), true);
+        c2.b += 0.004;
+        assert.equal(c1.equals(c2, 0.01), false);
+
+        c2.b = .85;
+        c2.a -= 0.001;
+        assert.equal(c1.equals(c2), false);
+        assert.equal(c1.equals(c2, 0.01), true);
+        c2.a -= 0.01;
+        assert.equal(c1.equals(c2, 0.01), false);
+
+        c2.a = .74;
+        assert.equal(c1.equals(c2), true);
+        assert.equal(c2.equals(c1), true);
+    });
+    void test('valid', () => {
+        const c = new Color(0.45, 0.51, 0.23, .8);
+
+        assert.equal(c.valid, true);
+
+        testProperties(c, ['r', 'g', 'b', 'a'], -0.5, () => c.valid, false);
+        testProperties(c, ['r', 'g', 'b', 'a'], NaN, () => c.valid, false);
+        testProperties(c, ['a'], 1.7, () => c.valid, false);
+
+        assert.equal(c.valid, true);
+    });
+
+    void test('reset', () => {
+        const c = new Color(0.12, 0.74, 0.25, .35);
+        c.reset();
+
+        assert.equal(c.r, 0);
+        assert.equal(c.g, 0);
+        assert.equal(c.b, 0);
+        assert.equal(c.a, 1);
     });
 });
 

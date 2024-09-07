@@ -58,3 +58,19 @@ export function checkRectIndependence (r1: Rect, r2: Rect): void {
     checkSizeIndependence(r1 as unknown as Size, r2 as unknown as Size);
     checkPointIndependence(r1 as unknown as Point, r2 as unknown as Point);
 }
+
+export function testProperties<T extends object, R> (
+    subject: T,
+    keys: (keyof T)[],
+    value: T[keyof T],
+    test: () => R,
+    result: R
+): void {
+    for (const key of keys) {
+        const original = subject[key];
+        subject[key] = value;
+
+        assert.equal(test(), result);
+        subject[key] = original;
+    }
+}
