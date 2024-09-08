@@ -182,6 +182,106 @@ void describe('Color', () => {
         assert.equal(c.b, 0);
         assert.equal(c.a, 1);
     });
+
+    void test('text', () => {
+        const c = new Color(0, 0, 0);
+
+        assert.equal(c.hex, '#000000');
+        assert.equal(c.hexa, '#000000ff');
+        assert.equal(c.cssRGB, 'rgb(0, 0, 0)');
+        assert.equal(c.cssRGBA, 'rgba(0, 0, 0, 1)');
+
+        c.g = 1;
+        assert.equal(c.hex, '#00ff00');
+        assert.equal(c.hexa, '#00ff00ff');
+        assert.equal(c.cssRGB, 'rgb(0, 255, 0)');
+        assert.equal(c.cssRGBA, 'rgba(0, 255, 0, 1)');
+
+        c.b = 0.25;
+        assert.equal(c.hex, '#00ff3f');
+        assert.equal(c.hexa, '#00ff3fff');
+        assert.equal(c.cssRGB, 'rgb(0, 255, 63)');
+        assert.equal(c.cssRGBA, 'rgba(0, 255, 63, 1)');
+
+        c.r = 0.5;
+        assert.equal(c.hex, '#7fff3f');
+        assert.equal(c.hexa, '#7fff3fff');
+        assert.equal(c.cssRGB, 'rgb(127, 255, 63)');
+        assert.equal(c.cssRGBA, 'rgba(127, 255, 63, 1)');
+
+        c.a = 0.58;
+        assert.equal(c.hex, '#7fff3f');
+        assert.equal(c.hexa, '#7fff3f93');
+        assert.equal(c.cssRGB, 'rgb(127, 255, 63)');
+        assert.equal(c.cssRGBA, 'rgba(127, 255, 63, 0.58)');
+
+        c.r = 4;
+        c.g = 2;
+        c.b = 1;
+        assert.equal(c.hex, '#ff7f3f');
+        assert.equal(c.hexa, '#ff7f3f93');
+        assert.equal(c.cssRGB, 'rgb(255, 127, 63)');
+        assert.equal(c.cssRGBA, 'rgba(255, 127, 63, 0.58)');
+    });
+    void test('normalize', () => {
+        const c = new Color(167, 73, 211).normalize(255);
+
+        assert.equal(c.hex, '#a749d3');
+        assert.equal(c.hexa, '#a749d3ff');
+        assert.equal(c.cssRGB, 'rgb(167, 73, 211)');
+        assert.equal(c.cssRGBA, 'rgba(167, 73, 211, 1)');
+
+        c.r = 5;
+        c.g = 2;
+        c.b = 1;
+        c.normalize();
+        assert.equal(c.r, 1);
+        assert.equal(c.g, 0.4);
+        assert.equal(c.b, 0.2);
+
+        c.r = 0.5;
+        c.normalize(1);
+        assert.equal(c.r, 0.5);
+        assert.equal(c.g, 0.4);
+        assert.equal(c.b, 0.2);
+
+        c.normalize();
+        assert.equal(c.r, 1);
+        assert.equal(c.g, 0.8);
+        assert.equal(c.b, 0.4);
+    });
+    void test('abnormal', () => {
+        const c = Color.random(false);
+
+        assert.equal(c.abnormal, false);
+
+        testProperties(c, ['r', 'g', 'b', 'a'], -0.5, () => c.abnormal, true);
+        testProperties(c, ['r', 'g', 'b', 'a'], 2, () => c.abnormal, true);
+        testProperties(c, ['r', 'g', 'b', 'a'], NaN, () => c.abnormal, true);
+
+        assert.equal(c.abnormal, false);
+    });
+    void test('random', () => {
+        const co = Color.random();
+
+        assert.equal(co.a, 1);
+        assert.equal(co.r >= 0 && co.r <= 1, true);
+        assert.equal(co.g >= 0 && co.g <= 1, true);
+        assert.equal(co.b >= 0 && co.b <= 1, true);
+
+        //this is not guaranteed, but the probability of it being false negative is really low
+        assert.equal(co.r !== 0 || co.g !== 0 || co.b !== 0, true);
+
+        const ct = Color.random(false);
+
+        assert.equal(ct.a >= 0 && ct.a <= 1, true);
+        assert.equal(ct.r >= 0 && ct.r <= 1, true);
+        assert.equal(ct.g >= 0 && ct.g <= 1, true);
+        assert.equal(ct.b >= 0 && ct.b <= 1, true);
+
+        //this is not guaranteed, but the probability of it being false negative is really low
+        assert.equal(co.r !== 0 || co.g !== 0 || co.b !== 0 || ct.a !== 0, true);
+    });
 });
 
 export function checkColorIndependence (c1: Color, c2: Color): void {

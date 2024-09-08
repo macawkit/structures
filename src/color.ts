@@ -35,6 +35,9 @@ export default class Color implements Structure<Color> {
             this.a >= 0 && this.a <= 1
         );
     }
+    public get abnormal (): boolean {
+        return !this.valid || this.r > 1 || this.g > 1 || this.b > 1;
+    }
     public equals (other: Color, epsilon?: number): boolean {
         if (epsilon) {
             return (
@@ -54,6 +57,42 @@ export default class Color implements Structure<Color> {
     }
     public toString (): string {
         return `Color(${this.r.toString()}, ${this.g.toString()}, ${this.b.toString()}, ${this.a.toString()})`;
+    }
+    public get cssRGBA (): string {
+        const multiplier = 255 / Math.max(this.r, this.g, this.b, 1);
+        const r = Math.trunc(this.r * multiplier).toString();
+        const g = Math.trunc(this.g * multiplier).toString();
+        const b = Math.trunc(this.b * multiplier).toString();
+        const a = this.a.toString();
+
+        return `rgba(${r}, ${g}, ${b}, ${a})`;
+    }
+    public get cssRGB (): string {
+        const m = 255 / Math.max(this.r, this.g, this.b, 1);
+
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+        return 'rgb(' + Math.trunc(this.r * m) + ', ' + Math.trunc(this.g * m) + ', ' + Math.trunc(this.b * m) + ')';
+    }
+    public get hex (): string {
+        const multiplier = 255 / Math.max(this.r, this.g, this.b, 1);
+        const r = leadingZeroPad(Math.trunc(this.r * multiplier).toString(16), 2);
+        const g = leadingZeroPad(Math.trunc(this.g * multiplier).toString(16), 2);
+        const b = leadingZeroPad(Math.trunc(this.b * multiplier).toString(16), 2);
+
+        return '#' + r + g + b;
+    }
+    public get hexa (): string {
+        const a = leadingZeroPad(Math.trunc(this.a * 255).toString(16), 2);
+
+        return this.hex + a;
+    }
+    public normalize (cutoff = 0): this {
+        const multiplier = 1 / Math.max(this.r, this.g, this.b, cutoff);
+        this.r *= multiplier;
+        this.g *= multiplier;
+        this.b *= multiplier;
+
+        return this;
     }
 
     public over (background: Color): this {
@@ -82,4 +121,21 @@ export default class Color implements Structure<Color> {
 
         return this;
     }
+
+    public static random (opaque = true): Color {
+        return new Color(Math.random(), Math.random(), Math.random(), opaque ? 1 : Math.random());
+    }
+}
+
+const paddings = new Map<number, string[]>;
+function leadingZeroPad (value: string, length: number): string {
+    let padding = paddings.get(length);
+    if (!padding) {
+        padding = [];
+        paddings.set(length, padding);
+        for (let i = 0; i <= length; ++i)
+            padding.push('0'.repeat(length - i));
+    }
+
+    return padding[value.length] + value;
 }
