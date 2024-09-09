@@ -198,38 +198,38 @@ void describe('Color', () => {
         assert.equal(c.cssRGBA, 'rgba(0, 255, 0, 1)');
 
         c.b = 0.25;
-        assert.equal(c.hex, '#00ff3f');
-        assert.equal(c.hexa, '#00ff3fff');
-        assert.equal(c.cssRGB, 'rgb(0, 255, 63)');
-        assert.equal(c.cssRGBA, 'rgba(0, 255, 63, 1)');
+        assert.equal(c.hex, '#00ff40');
+        assert.equal(c.hexa, '#00ff40ff');
+        assert.equal(c.cssRGB, 'rgb(0, 255, 64)');
+        assert.equal(c.cssRGBA, 'rgba(0, 255, 64, 1)');
 
         c.r = 0.5;
-        assert.equal(c.hex, '#7fff3f');
-        assert.equal(c.hexa, '#7fff3fff');
-        assert.equal(c.cssRGB, 'rgb(127, 255, 63)');
-        assert.equal(c.cssRGBA, 'rgba(127, 255, 63, 1)');
+        assert.equal(c.hex, '#80ff40');
+        assert.equal(c.hexa, '#80ff40ff');
+        assert.equal(c.cssRGB, 'rgb(128, 255, 64)');
+        assert.equal(c.cssRGBA, 'rgba(128, 255, 64, 1)');
 
         c.a = 0.58;
-        assert.equal(c.hex, '#7fff3f');
-        assert.equal(c.hexa, '#7fff3f93');
-        assert.equal(c.cssRGB, 'rgb(127, 255, 63)');
-        assert.equal(c.cssRGBA, 'rgba(127, 255, 63, 0.58)');
+        assert.equal(c.hex, '#80ff40');
+        assert.equal(c.hexa, '#80ff4093');
+        assert.equal(c.cssRGB, 'rgb(128, 255, 64)');
+        assert.equal(c.cssRGBA, 'rgba(128, 255, 64, 0.58)');
 
         c.r = 4;
         c.g = 2;
         c.b = 1;
-        assert.equal(c.hex, '#ff7f3f');
-        assert.equal(c.hexa, '#ff7f3f93');
-        assert.equal(c.cssRGB, 'rgb(255, 127, 63)');
-        assert.equal(c.cssRGBA, 'rgba(255, 127, 63, 0.58)');
+        assert.equal(c.hex, '#ff8040');
+        assert.equal(c.hexa, '#ff804093');
+        assert.equal(c.cssRGB, 'rgb(255, 128, 64)');
+        assert.equal(c.cssRGBA, 'rgba(255, 128, 64, 0.58)');
     });
     void test('normalize', () => {
-        const c = new Color(167, 73, 211).normalize(255);
+        const c = new Color(167, 74, 211).normalize(255);
 
-        assert.equal(c.hex, '#a749d3');
-        assert.equal(c.hexa, '#a749d3ff');
-        assert.equal(c.cssRGB, 'rgb(167, 73, 211)');
-        assert.equal(c.cssRGBA, 'rgba(167, 73, 211, 1)');
+        assert.equal(c.hex, '#a74ad3');
+        assert.equal(c.hexa, '#a74ad3ff');
+        assert.equal(c.cssRGB, 'rgb(167, 74, 211)');
+        assert.equal(c.cssRGBA, 'rgba(167, 74, 211, 1)');
 
         c.r = 5;
         c.g = 2;

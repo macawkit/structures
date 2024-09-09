@@ -60,9 +60,9 @@ export default class Color implements Structure<Color> {
     }
     public get cssRGBA (): string {
         const multiplier = 255 / Math.max(this.r, this.g, this.b, 1);
-        const r = Math.trunc(this.r * multiplier).toString();
-        const g = Math.trunc(this.g * multiplier).toString();
-        const b = Math.trunc(this.b * multiplier).toString();
+        const r = Math.round(this.r * multiplier).toString();
+        const g = Math.round(this.g * multiplier).toString();
+        const b = Math.round(this.b * multiplier).toString();
         const a = this.a.toString();
 
         return `rgba(${r}, ${g}, ${b}, ${a})`;
@@ -71,13 +71,13 @@ export default class Color implements Structure<Color> {
         const m = 255 / Math.max(this.r, this.g, this.b, 1);
 
         // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-        return 'rgb(' + Math.trunc(this.r * m) + ', ' + Math.trunc(this.g * m) + ', ' + Math.trunc(this.b * m) + ')';
+        return 'rgb(' + Math.round(this.r * m) + ', ' + Math.round(this.g * m) + ', ' + Math.round(this.b * m) + ')';
     }
     public get hex (): string {
         const multiplier = 255 / Math.max(this.r, this.g, this.b, 1);
-        const r = leadingZeroPad(Math.trunc(this.r * multiplier).toString(16), 2);
-        const g = leadingZeroPad(Math.trunc(this.g * multiplier).toString(16), 2);
-        const b = leadingZeroPad(Math.trunc(this.b * multiplier).toString(16), 2);
+        const r = leadingZeroPad(Math.round(this.r * multiplier).toString(16), 2);
+        const g = leadingZeroPad(Math.round(this.g * multiplier).toString(16), 2);
+        const b = leadingZeroPad(Math.round(this.b * multiplier).toString(16), 2);
 
         return '#' + r + g + b;
     }
