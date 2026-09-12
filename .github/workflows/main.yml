@@ -16,5 +16,11 @@ jobs:
 
   check:
     needs: lint
-    name: Run checks
+    name: Run checks for Node ${{ matrix.node-version }}
+    strategy:
+      matrix:
+        node-version: ['20.x', '22.x']
+
     uses: ./.github/workflows/check.yml
+    with:
+      node-version: ${{ matrix.node-version }}

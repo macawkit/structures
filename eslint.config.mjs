@@ -14,7 +14,7 @@ export default tslint.config(
         }
     },
     {
-        ignores: ['dist/', 'eslint.config.mjs']
+        ignores: ['dist/', 'dist-test/', 'eslint.config.mjs']
     },
     {
         rules: {
@@ -26,5 +26,9 @@ export default tslint.config(
             }],
             '@typescript-eslint/no-non-null-assertion': 'off'
         }
+    },
+    {
+        files: ['test/**/*.ts'],
+        extends: [tslint.configs.disableTypeChecked]
     }
 );

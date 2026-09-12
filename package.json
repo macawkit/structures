@@ -16,13 +16,15 @@
     "dist"
   ],
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist dist-test",
     "build": "tsc -p tsconfig.json",
     "prebuild": "npm run clean",
-    "test": "bun test",
-    "test:coverage": "bun test --coverage",
+    "build:tests": "tsc -p tsconfig.test.json",
+    "pretest": "npm run build:tests",
+    "test": "node --test --test-reporter=spec dist-test/test/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage dist-test/test/*.test.js",
     "lint": "eslint .",
-    "prepack": "bun run build"
+    "prepack": "npm run build"
   },
   "author": {
     "name": "Yury Gubich",
@@ -37,7 +39,7 @@
     "@eslint/js": "^10.0.1",
     "@types/node": "^22.20.2",
     "eslint": "^10.10.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.70.0"
   }
 }

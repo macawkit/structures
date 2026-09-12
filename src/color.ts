@@ -1,4 +1,4 @@
-import Structure from './structure';
+import Structure from './structure.js';
 
 export default class Color implements Structure<Color> {
     constructor (
