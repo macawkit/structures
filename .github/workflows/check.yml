@@ -1,16 +1,7 @@
 name: Run Checks
 on:
   workflow_call:
-    inputs:
-      node-version:
-        required: true
-        type: string
   workflow_dispatch:
-    inputs:
-      node-version:
-        description: "A version of Node.js the project should be tested for"
-        type: string
-        default: "latest"
 
 jobs:
   test:
@@ -20,10 +11,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Environment
-        uses: ./.github/install-brief
-        with:
-          node-version: ${{ inputs.node-version }}
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
 
       - name: Run tests
-        run: npm test
+        run: bun test
