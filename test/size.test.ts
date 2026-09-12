@@ -1,9 +1,9 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
 
-import { checkSizeIndependence } from './utils';
+import { checkSizeIndependence } from './utils.js';
 
-import { Size } from '../src';
+import { Size } from '../src/index.js';
 
 void describe('Size', () => {
     void test('creation', () => {

@@ -1,9 +1,9 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
 
-import { checkPointIndependence, checkRectIndependence, testProperties } from './utils';
+import { checkPointIndependence, checkRectIndependence, testProperties } from './utils.js';
 
-import { Rect, Point, Size } from '../src';
+import { Rect, Point, Size } from '../src/index.js';
 
 void describe('Rect', () => {
     void test('creation', () => {

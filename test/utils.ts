@@ -1,6 +1,6 @@
 import assert from 'node:assert';
 
-import { Point, Size, Rect } from '../src';
+import { Point, Size, Rect } from '../src/index.js';
 
 export function checkPointIndependence (p1: Point, p2: Point): void {
     const x0 = p1.x;

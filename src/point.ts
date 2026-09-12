@@ -1,4 +1,4 @@
-import { Coordinate } from './structure';
+import { Coordinate } from './structure.js';
 
 export default class Point implements Coordinate<Point>{
     constructor (

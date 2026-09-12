@@ -1,9 +1,9 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert';
 
-import { Color } from '../src';
+import { Color } from '../src/index.js';
 
-import { testProperties } from './utils';
+import { testProperties } from './utils.js';
 
 void describe('Color', () => {
     void test('creation', () => {

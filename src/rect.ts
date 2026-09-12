@@ -1,6 +1,6 @@
-import Structure from './structure';
-import Point from './point';
-import Size from './size';
+import Structure from './structure.js';
+import Point from './point.js';
+import Size from './size.js';
 
 export default class Rect implements Structure<Rect> {
     constructor (
